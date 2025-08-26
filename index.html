@@ -397,7 +397,7 @@
 <body>
     <div class="presentation">
         <div class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">11</span>
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
         </div>
 
         <!-- Slide 1: Title -->
@@ -575,28 +575,65 @@
                 <h3 style="color: #8e44ad; margin-bottom: 20px;">📖 Get Your Classwork Book Ready!</h3>
                 
                 <div class="workbook-instruction">
-                    <strong>Step 1:</strong> Write today's date at the top of your page
+                    <strong>Step 1:</strong> Write today's date at the top of your page like this:
                 </div>
-                <div class="date-line">Date: ________________</div>
+                <div style="border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin: 15px 0; background: rgba(255, 255, 255, 0.8);">
+                    <div style="text-align: left; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        <div style="border-bottom: 1px solid #bdc3c7; padding-bottom: 5px; margin-bottom: 10px;">
+                            Sunday _____ September 2025
+                        </div>
+                        <div style="border-bottom: 1px solid #bdc3c7; padding-bottom: 5px; margin-bottom: 15px; font-style: italic;">
+                            Spelling
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="workbook-instruction">
-                    <strong>Step 2:</strong> Copy all 10 spelling words carefully:
+                    <strong>Step 2:</strong> Copy the spelling words in two columns like this:
                 </div>
-                <div class="word-lines">
-                    1. cat  2. bat  3. fat  4. hat  5. sat<br><br>
-                    6. cap  7. tap  8. map  9. nap  10. lap
+                <div style="border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin: 15px 0; background: rgba(255, 255, 255, 0.8);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; font-family: 'Courier New', monospace; font-size: 1.1em; text-align: left;">
+                        <div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">1. cat</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">2. bat</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">3. fat</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">4. hat</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">5. sat</div>
+                        </div>
+                        <div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">6. cap</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">7. tap</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">8. map</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">9. nap</div>
+                            <div style="border-bottom: 1px solid #bdc3c7; padding: 5px 0;">10. lap</div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="workbook-instruction">
-                    <strong>Step 3:</strong> Draw a picture about the story in this box:
-                </div>
-                <div class="picture-box">
-                    Draw Whiskers the cat and his adventure! 🎨
+                    <strong>Step 3:</strong> Draw a picture about the story at the top of your page!
                 </div>
                 
                 <div style="font-size: 1.1em; color: #e74c3c; margin-top: 20px;">
-                    <strong>Remember:</strong> Show what you learned about the cat's adventure!
+                    <strong>Remember:</strong> Use your best handwriting! 📝
                 </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Thank You & Reminder -->
+        <div class="slide">
+            <h1>🌟 Thank You Grade 1's! 🌟</h1>
+            <div style="font-size: 2em; margin: 40px 0; animation: bounce 2s infinite;">
+                📚✨📝
+            </div>
+            <div class="explanation-text" style="font-size: 1.6em;">
+                <strong>Remember to practice your spelling words for the spelling test on Thursday!</strong>
+            </div>
+            <div style="font-size: 1.3em; margin: 30px 0; color: #8e44ad;">
+                You did AMAZING work today! 🎉
+            </div>
+            <div style="font-size: 4em; margin: 30px 0;">
+                👏 🌈 ⭐
             </div>
         </div>
 
@@ -718,23 +755,75 @@
             }, 1000);
         }
 
-        // Add sound effect simulation for interactions
-        function playSound() {
-            // Visual feedback instead of actual sound
+        // Text-to-Speech functionality
+        function speakWord(text) {
+            // Check if browser supports speech synthesis
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+                
+                // Create new speech utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Configure speech settings for young learners
+                utterance.rate = 0.8; // Slightly slower for clarity
+                utterance.pitch = 1.1; // Slightly higher pitch, friendly for kids
+                utterance.volume = 0.9; // Good volume
+                
+                // Try to use a child-friendly voice if available
+                const voices = speechSynthesis.getVoices();
+                const femaleVoice = voices.find(voice => 
+                    voice.name.includes('Female') || 
+                    voice.name.includes('Woman') ||
+                    voice.name.includes('Karen') ||
+                    voice.name.includes('Samantha')
+                );
+                
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+                
+                // Speak the word
+                speechSynthesis.speak(utterance);
+                
+                // Visual feedback
+                playVisualFeedback();
+            } else {
+                // Fallback for browsers without speech synthesis
+                console.log('Text-to-speech not supported');
+                playVisualFeedback();
+            }
+        }
+
+        // Visual feedback for interactions
+        function playVisualFeedback() {
             document.body.style.background = 'linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)';
             setTimeout(() => {
                 document.body.style.background = 'linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4)';
             }, 200);
         }
 
-        // Add click sound effects
+        // Enhanced click sound effects with text-to-speech
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('word-card') || 
-                e.target.classList.contains('match-word') || 
-                e.target.classList.contains('match-picture') ||
-                e.target.classList.contains('letter-tile')) {
-                playSound();
+            if (e.target.classList.contains('word-card')) {
+                const wordText = e.target.textContent.trim();
+                speakWord(wordText);
+            } else if (e.target.classList.contains('match-word')) {
+                const wordText = e.target.textContent.trim();
+                speakWord(wordText);
+            } else if (e.target.classList.contains('example-card')) {
+                // For the short-a examples, speak just the word (not emoji)
+                const wordText = e.target.textContent.split(' ')[0]; // Get first word before emoji
+                speakWord(wordText);
+            } else if (e.target.classList.contains('match-picture') || 
+                       e.target.classList.contains('letter-tile')) {
+                playVisualFeedback();
             }
+        });
+
+        // Load voices when they become available (some browsers load them asynchronously)
+        speechSynthesis.addEventListener('voiceschanged', function() {
+            // Voices are now loaded and available
         });
 
         // Keyboard navigation
